@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My 5-Track Demo</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('_n2.png');
+      background-size: fit;
+      color: black;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: white;
+    }
+
+    #artworkContainer {
+      max-width: 400px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    #artworkContainer img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    #trackList {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      color: white;
+    }
+
+    #trackList h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul li {
+      cursor: pointer;
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    ul li:hover {
+      background-color: rgba(255, 0, 0, 0.5);
+    }
+
+    ul li audio {
+      display: block;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    #lyricsContainer {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      color: black;
+      overflow-y: scroll;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s ease;
+    }
+
+    #lyricsContainer button {
+      display: block;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    .active-lyrics {
+      right: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+
+      #artworkContainer,
+      #trackList {
+        width: 90%;
+        margin: 10px auto;
+      }
+
+      #trackList ul li {
+        font-size: 1em;
+        padding: 15px;
+      }
+
+      #lyricsContainer {
+        width: 100%;
+        right: -100%;
+        top: 60px;
+        height: calc(100vh - 60px);
+      }
+
+      .active-lyrics {
+        right: 0;
+      }
+
+      footer {
+        position: relative;
+        padding: 15px;
+      }
+
+      ul li audio {
+        width: 100%;
+        margin-top: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>My 5-Track Demo</h1>
+  </header>
+
+  <div id="artworkContainer">
+    <img src='https://i.postimg.cc/SNM5rCq9/FB-IMG-1731227945642.jpg' alt='SickofmE' />
+  </div>
+
+  <section id="trackList">
+    <h2>Tracks</h2>
+    <ul>
+      <li>am i dead yet?
+        <audio controls>
+          <source src="sound.ogg" type="audio/ogg">
+          <source src="sound.mp3" type="audio/mpeg">
+        </audio>
+      </li>
+      <li>bad for you
+        <audio controls>
+          <source src="sound.ogg" type="audio/ogg">
+          <source src="sound.mp3" type="audio/mpeg">
+        </audio>
+      </li>
+      <li>paper heart
+        <audio controls>
+          <source src="sound.ogg" type="audio/ogg">
+          <source src="sound.mp3" type="audio/mpeg">
+        </audio>
+      </li>
+      <li>my shadow
+        <audio controls>
+          <source src="sound.ogg" type="audio/ogg">
+          <source src="sound.mp3" type="audio/mpeg">
+        </audio>
+      </li>
+      <li>idle hands
+        <audio controls>
+          <source src="sound.ogg" type="audio/ogg">
+          <source src="sound.mp3" type="audio/mpeg">
+        </audio>
+      </li>
+    </ul>
+  </section>
+
+  <div id="lyricsContainer">
+    <button id="closeLyrics">Close</button>
+    <div id="lyricsContent"></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 My 5-Track Demo. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const lyricsContainer = document.getElementById('lyricsContainer');
+      const lyricsContent = document.getElementById('lyricsContent');
+      const closeBtn = document.getElementById('closeLyrics');
+
+      const trackLyrics = {
+        'am i dead yet?': "the sickness inside me",
+        'bad for you': "You know I'm bad for you...",
+        'paper heart': "Fragile and torn...",
+        'my shadow': "Hiding in the dark...",
+        'idle hands': "Can't keep still anymore..."
+      };
+
+      const trackListItems = document.querySelectorAll('#trackList li');
+
+      trackListItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const trackName = item.textContent.trim();
+          const lyrics = trackLyrics[trackName] || "Lyrics not available.";
+          lyricsContent.textContent = lyrics;
+
+          lyricsContainer.classList.add('active-lyrics');
+        });
+      });
+
+      closeBtn.addEventListener('click', () => {
+        lyricsContainer.classList.remove('active-lyrics');
+      });
+    });
+  </script>
+</body>
+
+</html>
